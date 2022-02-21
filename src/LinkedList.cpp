@@ -1,6 +1,6 @@
 #include <iostream>
 
-class Node{
+struct Node{
     public:
         int data;
         Node * next;
@@ -13,10 +13,10 @@ class LinkedList{
         Node* tail;
     public:
         LinkedList();
-        void addFirst(int n);
-        void addAtIndex(int n);
-        void addLast(int n);
-        void removeMatch(int n);
+        void addFirst(int data);
+        void addAtIndex(int n, int data);
+        void addLast(int data);
+        void removeMatch(int data);
         void removeAtIndex(int n);
         void removeFirst();
         void removeLast();
@@ -33,7 +33,6 @@ void LinkedList::addFirst(int n){
     Node *temp = new Node;
     temp->data = n;
     temp->next = NULL;
-    temp->prev = NULL;
     if(head == NULL){
         head = temp;
         tail = temp;
@@ -44,8 +43,22 @@ void LinkedList::addFirst(int n){
     }
 }
 
-void LinkedList::addAtIndex(int n){
-
+void LinkedList::addAtIndex(int n, int data){
+    Node * newNode = new Node;
+    Node * temp = head;
+    Node * prev;
+    newNode->data = data;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    int i = 0;
+    while(i < n)
+    {
+        prev = temp;
+        temp = temp->next;
+        i++;
+    }
+    prev->next = newNode;
+    newNode->next = temp;
 }
 
 void LinkedList::addLast(int n){
@@ -132,7 +145,8 @@ int main()
     list1.displayList();
     list1.removeLast();
     list1.displayList();
-
+    list1.addAtIndex(2, 10);
+    list1.displayList();
 
     LinkedList list2;
     list2.addFirst(7);
